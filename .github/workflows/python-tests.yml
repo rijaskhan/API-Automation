@@ -28,7 +28,7 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
         # Step 5: Upload HTML report as artifact
       - name: Upload test report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-report
           path: reports/report.html
