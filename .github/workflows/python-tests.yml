@@ -21,12 +21,18 @@ jobs:
         # Step 3: Install dependencies
       - name: Install dependencies
         run: pip install -r requirements.txt
-        # Step 4: Run tests and generate HTML report
+        #Step 4: Create reports directory
+      - name: Ensure reports folder exists
+        run: mkdir -p reports
+        # Step 5: Run tests and generate HTML report
       - name: Run tests with pytest
         run: pytest --html=report.html --self-contained-html
         env:
           API_KEY: ${{ secrets.API_KEY }}
-        # Step 5: Upload HTML report as artifact
+        #Step 6: List reports folder
+      - name: List reports folder
+        run: ls -l reports/
+        # Step 7: Upload HTML report as artifact
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
