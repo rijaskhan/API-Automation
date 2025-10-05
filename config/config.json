@@ -1,0 +1,5 @@
+{
+  "base_url" : "https://api.openweathermap.org/data/2.5",
+  "country_url": "https://restcountries.com/v3.1",
+  "timeout": 5
+}
