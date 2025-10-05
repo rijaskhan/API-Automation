@@ -6,9 +6,11 @@ from utils.schema_validator import WeatherSchema
 client = APIClient()
 custom_logger = Logger.log_gen()
 
-def test_valid_city_weather():
-    response = client.get_weather("London")
+@pytest.mark.parametrize("city", ["New York", "Los Angeles", "Chicago", "Kochi", "Idukki"])
+def test_valid_city_weather(city):
+    response = client.get_weather(city)
     assert response.status_code == 200
+    assert response.elapsed.total_seconds() < client.timeout
     data = response.json()
     custom_logger.info(f"json response: {data}")
     WeatherSchema(**data)   # schema validation

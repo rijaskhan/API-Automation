@@ -11,13 +11,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+        # Step 1: Checkout the repository
       - uses: actions/checkout@v3
+        # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.12
-      - run: pip install -r requirements.txt
-        name: Run tests
+        # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        #Step 4: Create reports directory
+      - name: Ensure reports folder exists
+        run: mkdir -p reports
+        # Step 5: Run tests and generate HTML report
+      - name: Run tests with pytest
+        run: pytest --html=reports/report.html --self-contained-html
         env:
-            API_KEY: ${{ secrets.API_KEY }}
-      - run: pytest
+          API_KEY: ${{ secrets.API_KEY }}
+        #Step 6: List reports folder
+      - name: List reports folder
+        run: ls -l reports/
+        # Step 7: Upload HTML report as artifact
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: reports/report.html
